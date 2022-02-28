@@ -141,7 +141,7 @@ public class Game{
    
     public void pick(Command command){
     	Random random= new Random();
-    	int next = random.nextInt();
+    	int next = random.nextInt(6);
     	
         Scanner keyboard= new Scanner(System.in);
       
@@ -158,7 +158,7 @@ public class Game{
 
             System.out.println("pick a number 1-5 to pick the lock. You can pick the lock if you guess the right number");
             int myInt= keyboard.nextInt();
-            return next(6);
+            return next();
         }
         if(itemToPick==null){
             System.out.println("you can't grab that");
@@ -223,6 +223,10 @@ public class Game{
             player.setItem(item, itemToGrab);
             printInformation();
         }
+    }
+    
+    public void setPoints() {
+    	
     }
    
     public void drop(Command command){
