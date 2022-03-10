@@ -4,8 +4,8 @@ import java.util.Set;
 public class Item{
     private String name;
     private String description;
-    int points;
-    public Item(String name, String description) {
+    private int points;
+    public Item(String name, String description,int points) {
         this.name=name;
         this.description = description;
         points =0;
@@ -19,16 +19,14 @@ public class Item{
         return description;
     }
     
-    public void setPoints(int value){
-        points+=value;
-    }
-    
-    public int getPlayerPoints(){
-        return points;
-    }
+  public int getPoints() {
+	  
+	  return points;
+		  
+	  }
+  }
     
 
-    }
-    
+ 
  
 

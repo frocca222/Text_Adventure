@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Set;
 public class Player{
     private HashMap<String, Item> inventory;
-    private int playerPoints;
+    
     private String name;
     
     public Player() {
@@ -33,6 +33,11 @@ public class Player{
             returnString += " " + item;
         }
         return returnString;
+    }
+    public void setPoints() {
+    	int playerPoints= 0;
+    	
+    	
     }
     
 }

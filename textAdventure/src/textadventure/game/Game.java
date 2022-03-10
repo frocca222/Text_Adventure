@@ -9,6 +9,9 @@ public class Game{
     private CLS cls_var;
     private int points;
     private int randomGuess;
+    private Location clearingOne;
+    private Location duckPond;
+    private Location chickenCoop;
     public Game(){
         parser = new Parser();
         player = new Player();
@@ -32,13 +35,13 @@ public class Game{
     public void setupGame() {
         
         Location startingLocation = new Location ("tree","You are at the base of a tree", "You are standing next to a very tall tree.\nAt the base of it there is a whole.\nThere are four different paths in each direction that you are able to go down.\n");
-        Location duckPond = new Location("duck pond","You are at the duck pond" , "You are in a meadow and in the center of it is a pond.\nThere are about 15 ducks swimming at the top.\nThere is sunlight beaming into the meadow, shining onto the flowers and algae on the water.\nThere is a thick forest you can’t enter to east\n");
+        duckPond = new Location("duck pond","You are at the duck pond" , "You are in a meadow and in the center of it is a pond.\nThere are about 15 ducks swimming at the top.\nThere is sunlight beaming into the meadow, shining onto the flowers and algae on the water.\nThere is a thick forest you can’t enter to east\n");
         Location appleOrchard = new Location ("apple orchard","You are in an apple orchard", "There are rows of trees growing in front of you.\nThe trees has hundreds apples growing on them.\nIn almost every direction, there is dense forest that you can not enter.\nDown one path, you see a large tree.\n");
         Location farmersHouse = new Location ("farmers house","You are at the farmers house" , "You are at the door of a barnhouse that is worn down.\nInside lives the farmer who is eager to trap you.\nThere is thick forest you can’t enter north and west of the house, but there seems to be a clearing to the east.\nIn the clearing there is a single chicken.");
-        Location chickenCoop = new Location ("chicken coop","You are at the chicken coop", "You reach a coop filled with chickens and another small enclosed area filled with more chickens.\nThere is a gate to get access to the chickens, but you need a key to open it.\n");
-        Location clearingOne = new Location ("clearing one","You are in a trap","You hear the a loud metallic bang.\nYou look around and are now in a cage that the farmer set up to  trap you.\nThere is a way out though.\nThere is a lock and if you guess the right number, you will be free.\nIf not the farmer will catch you.\n");        
-        Location clearingTwo = new Location ("clearing two","You are in a trap","You hear the a loud metallic bang.\nYou look around and are now in a cage that the farmer set up to  trap you.\nThere is a way out though.\nThere is a lock and if you guess the right number, you will be free.\nIf not the farmer will catch you.\n");        
-        Location clearingThree = new Location ("clearing three","You are in a trap","You hear the a loud metallic bang.\nYou look around and are now in a cage that the farmer set up to  trap you.\nThere is a way out though.\nThere is a lock and if you guess the right number, you will be free.\nIf not the farmer will catch you.\n");        
+        chickenCoop = new Location ("chicken coop","You are at the chicken coop", "You reach a coop filled with chickens and another small enclosed area filled with more chickens.\nThere is a gate to get access to the chickens, but you need a key to open it.\n");
+        clearingOne = new Location ("clearing one","You are in a trap and cannot leave \n","You hear the a loud metallic bang.\nYou look around and are now in a cage that the farmer set up to  trap you.\nThere is a way out though.\nThere is a lock you can pick if you have a lock pick in your inventory.\nIf not the farmer will catch you.\n");        
+        Location clearingTwo = new Location ("clearing two","You are in a trap and cannot leave \n","You hear the a loud metallic bang.\nYou look around and are now in a cage that the farmer set up to  trap you.\nThere is a way out though.\nThere is a lock you can pick if you have a lock pick in your inventory.\nIf not the farmer will catch you.\n");        
+        Location clearingThree = new Location ("clearing three","You are in a trap and cannot leave \n","You hear the a loud metallic bang.\nYou look around and are now in a cage that the farmer set up to  trap you.\nThere is a way out though.\nThere is a lock you can pick if you have a lock pick in your inventory.\nIf not the farmer will catch you.\n");        
         Location coop = new Location ("coop","You are in the coop", "You are in the coop and there is enough chickens to feed your family for weeks.");
        
         startingLocation.setExit("duck pond", duckPond);
@@ -59,32 +62,38 @@ public class Game{
         chickenCoop.setExit("starting location", startingLocation);
         chickenCoop.setExit("clearing one", clearingOne);
         chickenCoop.setExit("clearing two", clearingTwo);
+        
+        clearingOne.setExit("duck pond", duckPond);
+        clearingOne.setExit("chicken coop", chickenCoop);
+        
+        clearingTwo.setExit("apple orchard", appleOrchard);
+        clearingTwo.setExit("chicken coop", chickenCoop);
+        
+        clearingThree.setExit("farmers house",farmersHouse);
+        clearingThree.setExit("duck pond", duckPond);
        
-        coop.setExit("chicken coop", chickenCoop);
+        
 
-        Item lockPick = new Item("lock pick", "long description");
-        Item chicken = new Item("chicken", "The chicken is fat and covered in white feathers");
-        Item apple = new Item("apple", "The apple is red and reasonably sized. It is very shiny and will make the perfect snack for your family");
-        Item chickenTwo = new Item("chicken", "The chicken is fat and covered in white feathers");
-        Item key = new Item("key", "The key is small, gold, ornate piece of metal.");
-        Item flock = new Item("flock", "There are countless fat chickens in the flock");
+        Item lockPick = new Item("lock pick", "long description",0);
+        Item chicken = new Item("chicken", "The chicken is fat and covered in white feathers",1);
+        Item apple = new Item("apple", "The apple is red and reasonably sized. It is very shiny and will make the perfect snack for your family",1);
+        Item chickenTwo = new Item("chicken", "The chicken is fat and covered in white feathers",1);
+        Item rabbit = new Item("rabbit", "There is a large rabbit in the corner of the trap. It is covered in white fur and will make a nice ", 1);
+        Item flock = new Item("flock", "There are countless fat chickens in the flock. This many chickens will be able to feed your family for the entire winter.",13);
                
-        flock.setPoints(12);
-        chicken.setPoints(2);
-        apple.setPoints(1);
-        chickenTwo.setPoints(1);
-       
+   
 
         duckPond.setItem("lock pick", lockPick);
         chickenCoop.setItem("chicken", chicken);
         clearingThree.setItem("chicken", chickenTwo);
         appleOrchard.setItem("apple", apple);
-        clearingOne.setItem("key", key);
+        clearingOne.setItem("rabbit", rabbit);
         coop.setItem("flock", flock);
        
         currentLocation = startingLocation;
         try {
-            cls_var.main();
+           
+    ;
         }catch(Exception e) {
             System.out.println(e);
         }
@@ -134,36 +143,43 @@ public class Game{
             case "help":
                 help(command);
                 break;
-           
-           
+         
         }
     }
    
     public void pick(Command command){
     	Random random= new Random();
-    	int next = random.nextInt(6);
-    	
+    	int next = random.nextInt(2);
         Scanner keyboard= new Scanner(System.in);
-      
-        String pick = "";
-        Item itemToPick = null;
-        if(!command.hasSecondWord()) {
-            System.out.println("pick what?");
+     
+        Item itemPick = player.getItem("lock pick");
+        if(itemPick==null){
+            System.out.println("you can't pick the lock without a pick. \nGAME OVER");
+            System.exit(0);
         }
-        if(!command.hasLine()) {
-            pick = command.getSecondWord();
-        }
-        else if(command.hasLine()) {
-            pick = command.getSecondWord() + command.getLine();
+        if(currentLocation == clearingOne && player.getItem("lock pick") !=null) {
 
-            System.out.println("pick a number 1-5 to pick the lock. You can pick the lock if you guess the right number");
+        	if(!command.hasSecondWord()) {
+            System.out.println("Pick a number 0-2 to pick the lock. You can pick the lock if you guess the right number");
             int myInt= keyboard.nextInt();
-            return next();
+            	if(myInt==next) {
+            	
+            	System.out.println("You picked the lock. Now you can exit");
+            	currentLocation = duckPond;
+            }
+            	else 
+            		System.out.println("You did not successfully pick the lock.\nGAME OVER");
+            System.exit(0);
         }
-        if(itemToPick==null){
-            System.out.println("you can't grab that");
+        	if(currentLocation == clearingOne && player.getItem("lock pick") =null) {
+        		
+        	}
+     
         }
     }
+
+
+    
    
     public void help(Command command){
 
@@ -224,10 +240,6 @@ public class Game{
             printInformation();
         }
     }
-    
-    public void setPoints() {
-    	
-    }
    
     public void drop(Command command){
         String item = "";
@@ -256,7 +268,7 @@ public class Game{
         String direction= "";
         if(!command.hasSecondWord()) {
             System.out.println("go where?");
-        }
+        } 
         if(!command.hasLine()) {
             direction = command.getSecondWord();
         }
@@ -273,19 +285,34 @@ public class Game{
             printInformation();
         }
     }
-   
-    public void winGame(){
-        if (points>=15){
-            System.out.println("You found enough food for you family for weeks. You won!");
-            System.exit(0);
-        }
+    public void points(Command command) {
+    	String item = "";
+    	int playerPoint;	
+    	Item itemPointRabbit= player.getItem("rabbit");
+    	    
+    
+    	
+    	 if(!command.hasSecondWord()) {
+    		 
+    		 System.out.println(points);
+    	 }
     }
+
+    
    
     public void endGame() {
-        if (points<15){
+    	 
+    	 if (points>=15){
+             System.out.println("You found enough food for you family for weeks. You won!");
+             System.exit(0);
+    	 }
+        else
             System.out.println("You did not get enough food to feed you family and they starved.\n GAME OVER");
             System.exit(0);
+        
+        
         }
     }
-}
+    
+
 
